@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
     debugging_mode: bool = True
 
-    browser_name: supported.BrowserName = ''
+    browser_name: supported.BrowserName = 'chrome'
     browser_version: str = ''
 
     base_url: str = ''
