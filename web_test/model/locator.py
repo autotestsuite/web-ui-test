@@ -1,11 +1,11 @@
 from typing import Callable
 
-from selene import by
-from selene.support.shared.jquery_style import s
+from selene import by, be
+from selene.support.shared.jquery_style import ss
 
 
 class LocatorConfig:
-    locate_rule: Callable = None
+    locate_rule: Callable[[str], str] = None
 
     def get_element(self, tag):
         return self.Label(self.locate_rule, tag)
@@ -39,4 +39,4 @@ class LocatorConfig:
         def behind_label(self, label_value):
             by_, value = by.text(label_value)
             xpath = f'{self.locate_function(value)}//{self.tag}'
-            return s(by.xpath(xpath))
+            return ss(by.xpath(xpath)).element_by(be.clickable)
