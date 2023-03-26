@@ -1,7 +1,7 @@
 import json
 import os
 
-from web_test.alternative.pytest.settings import sourced
+from web_test.alternative.settings import sourced
 
 
 class Settings(sourced.Settings):
