@@ -11,7 +11,7 @@ class Config:
     @Option.default(6.0)
     def timeout(self): pass
 
-    @Option.default("gu xin")
+    @Option.default('gu xin')
     def author(self): pass
 
 
