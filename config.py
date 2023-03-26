@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     window_height: int = 1080
 
     headless: bool = False
-    incognito: bool = True
+    incognito: bool = False
 
     remote_url: Optional[str] = ''
     remote_enableVNC: bool = True
