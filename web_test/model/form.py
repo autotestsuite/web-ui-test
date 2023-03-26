@@ -47,7 +47,10 @@ class ABCForm(metaclass=abc.ABCMeta):
     def check_row_keyword_visible(self, row_keyword): pass
 
     @abc.abstractmethod
-    def get_column_value_by_row_index(self, row_index, column_name): pass
+    def click_row_keyword(self, row_keyword): pass
 
     @abc.abstractmethod
-    def get_column_value_by_row_keyword(self, row_keyword, column_name): pass
+    def get_column_text_by_row_index(self, row_index, column_name): pass
+
+    @abc.abstractmethod
+    def get_column_text_by_row_keyword(self, row_keyword, column_name): pass
