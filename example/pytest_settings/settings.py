@@ -18,7 +18,3 @@ config = Settings(
     os.getenv,
 )
 
-
-if __name__ == '__main__':
-    print(config.timeout)
-    print(config.author)
