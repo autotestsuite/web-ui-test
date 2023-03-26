@@ -9,12 +9,10 @@ class Config:
         self.request = request
 
     @Option.default(6.0)
-    def timeout(self):
-        pass
+    def timeout(self): pass
 
     @Option.default("gu xin")
-    def author(self):
-        pass
+    def author(self): pass
 
 
 def pytest_addoption(parser):
