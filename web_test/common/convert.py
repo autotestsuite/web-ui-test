@@ -1,7 +1,4 @@
-from typing import List
-
-
-def zip_dict(keys: List, values: List):
+def zip_dict(keys, values):
     if not values:
         values += [''] * (len(keys) - len(values))
     pairs = zip(keys, values)
