@@ -5,6 +5,7 @@ from typing import Literal, Optional
 from pydantic import BaseSettings
 
 from web_test.assist import project
+from web_test.assist.webdriver_manager import supported
 
 EnvContext = Literal['local', 'prod']
 
@@ -18,7 +19,7 @@ class Settings(BaseSettings):
 
     debugging_mode: bool = True
 
-    browser_name: str = ''
+    browser_name: supported.BrowserName = ''
     browser_version: str = ''
 
     base_url: str = ''
@@ -36,6 +37,9 @@ class Settings(BaseSettings):
     remote_enableVNC: bool = True
     remote_enableVideo: bool = False
     remote_enableLog: bool = True
+
+    hold_browser_open: bool = False
+    save_page_source_on_failure: bool = True
 
     @classmethod
     def in_context(cls, env: Optional[EnvContext] = None) -> Settings:
