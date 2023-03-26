@@ -1,7 +1,11 @@
 from typing import Dict, Callable, Optional
 
 from selenium import webdriver
-from selenium.webdriver.common.service import Service
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chromium.service import ChromiumService
+from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.ie.service import Service as IEService
 from selenium.webdriver.remote.webdriver import WebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.utils import ChromeType
@@ -17,27 +21,27 @@ installers: Dict[
 ] = {
     supported.chrome:
         lambda opts: webdriver.Chrome(
-            service=Service(ChromeDriverManager().install()),
+            ChromeService(ChromeDriverManager().install()),
             options=opts,
         ),
     supported.chromium:
         lambda opts: webdriver.Chrome(
-            service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
+            ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
             options=opts,
         ),
     supported.firefox:
         lambda opts: webdriver.Firefox(
-            service=Service(GeckoDriverManager().install()),
+            FirefoxService(GeckoDriverManager().install()),
             options=opts,
         ),
     supported.ie:
         lambda opts: webdriver.Ie(
-            service=Service(IEDriverManager().install()),
+            IEService(IEDriverManager().install()),
             options=opts,
         ),
     supported.edge:
         lambda ____: webdriver.Edge(
-            service=Service(EdgeChromiumDriverManager().install()),
+            EdgeService(EdgeChromiumDriverManager().install()),
         )
 }
 
