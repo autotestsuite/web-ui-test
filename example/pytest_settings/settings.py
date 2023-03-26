@@ -17,4 +17,3 @@ config = Settings(
     lambda key, _: json.load(open('settings.json')).get(key),
     os.getenv,
 )
-
