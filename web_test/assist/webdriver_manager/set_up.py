@@ -1,6 +1,7 @@
 from typing import Dict, Callable, Optional
 
 from selenium import webdriver
+from selenium.webdriver.common.service import Service
 from selenium.webdriver.remote.webdriver import WebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.utils import ChromeType
@@ -16,27 +17,27 @@ installers: Dict[
 ] = {
     supported.chrome:
         lambda opts: webdriver.Chrome(
-            ChromeDriverManager().install(),
+            service=Service(ChromeDriverManager().install()),
             options=opts,
         ),
     supported.chromium:
         lambda opts: webdriver.Chrome(
-            ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install(),
+            service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()),
             options=opts,
         ),
     supported.firefox:
         lambda opts: webdriver.Firefox(
-            executable_path=GeckoDriverManager().install(),
+            service=Service(GeckoDriverManager().install()),
             options=opts,
         ),
     supported.ie:
         lambda opts: webdriver.Ie(
-            IEDriverManager().install(),
+            service=Service(IEDriverManager().install()),
             options=opts,
         ),
     supported.edge:
         lambda ____: webdriver.Edge(
-            EdgeChromiumDriverManager().install(),
+            service=Service(EdgeChromiumDriverManager().install()),
         )
 }
 
