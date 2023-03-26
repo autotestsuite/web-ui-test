@@ -9,6 +9,7 @@ from web_test.model.locator import LocatorConfig
 
 class EditTable(LocatorConfig):
     locate_rule: Callable[[str], str] = None
+
     select_option: tuple = None
 
     def input_text_after_label(self, label, text):
