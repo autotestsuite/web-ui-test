@@ -17,9 +17,9 @@ class FormEntity(ABCForm):
         self.form_data_by_keyword = FormData(self.header_locator, self.row_locator_by_keyword)
 
     def check_row_keyword_visible(self, row_keyword):
-        visible = s(by.text(row_keyword)).wait_until(be.visible)
-        logger.info(f'检查表单信息{row_keyword}是否可见：{visible}')
-        return visible
+        logger.info(f'检查表单信息{row_keyword}是否可见')
+        s(by.text(row_keyword)).should(be.visible)
+        return self
 
     def click_row_keyword(self, row_keyword):
         logger.info(f'点击{row_keyword}的信息')
