@@ -1,4 +1,3 @@
-
 def abs_path_from_project(relative_path: str):
     import web_test
     from pathlib import Path
