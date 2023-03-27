@@ -14,7 +14,7 @@ import config
 from web_test.assist.allure import report
 from web_test.assist.python import monkey
 from web_test.assist.selenium.typing import WebDriverOptions
-from web_test.assist.webdriver_manager import supported
+from web_test.assist.webdriver_manager import supported, set_up
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -49,8 +49,9 @@ def browser_management():
 def _driver_from(settings: config.Settings) -> WebDriver:
     driver_options = _driver_options_from(settings)
     driver = (
-        getattr(webdriver, settings.browser_name.title())(
-            options=driver_options
+        set_up.local(
+            name=settings.browser_name,
+            options=driver_options,
         )
         if settings.debugging_mode
         else webdriver.Remote(
