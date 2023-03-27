@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     系统配置类，用于存储系统运行时需要的各种参数和配置。
     """
 
-    context: EnvContext = 'local'
+    context: EnvContext = 'prod'
 
     debugging_mode: bool = True
 
