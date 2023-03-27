@@ -57,3 +57,6 @@ class ABCForm(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_column_text_by_row_keyword(self, row_keyword, column_name): pass
+
+    @abc.abstractmethod
+    def column_text_by_row_keyword_should_be(self, row_keyword, column_name, text): pass

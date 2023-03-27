@@ -24,6 +24,11 @@ class EditTable(LocatorConfig):
         self.textarea.behind_label(label).click().clear().type(long_text)
         return self
 
+    def click_checkbox_after_label(self, label):
+        logger.info(f'点击{label}多选框')
+        self.input_box.behind_label(label).click()
+        return self
+
     def input_text_after_label_and_select_self(self, label, text):
         logger.info(f'输入{label}的内容并选择：{text}')
         self.input_text_after_label(label, text)

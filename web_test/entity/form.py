@@ -1,6 +1,6 @@
 from loguru import logger
 from selene import by, be, query, have
-from selene.support.shared.jquery_style import s, ss
+from selene.support.shared.jquery_style import s
 
 from web_test.model.form import ABCForm, FormData
 
@@ -42,3 +42,9 @@ class FormEntity(ABCForm):
         column_text = element.should(be.visible).get(query.text) if element else None
         logger.info(f'获取指定行关键字{row_keyword}的指定列名{column_name}的值：{column_text}')
         return column_text
+
+    def column_text_by_row_keyword_should_be(self, row_keyword, column_name, text):
+        logger.info(f'检查行关键字{row_keyword}的指定列名{column_name}的值是否为：{text}')
+        element = self.form_data_by_keyword.get_element_by_row_keyword_and_column_name(row_keyword, column_name)
+        element.should(have.text(text))
+        return self
