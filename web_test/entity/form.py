@@ -18,12 +18,12 @@ class FormEntity(ABCForm):
 
     def row_keyword_should_be_visible(self, row_keyword):
         logger.info(f'检查表单信息{row_keyword}是否可见')
-        ss(by.text(row_keyword)).should(have.size_greater_than_or_equal(1))
+        s(by.text(row_keyword)).should(be.visible)
         return self
 
     def row_keyword_should_not_be_visible(self, row_keyword):
         logger.info(f'检查表单信息{row_keyword}是否不可见')
-        ss(by.text(row_keyword)).should(have.no.size_greater_than_or_equal(1))
+        s(by.text(row_keyword)).should(be.not_.visible)
         return self
 
     def click_row_keyword(self, row_keyword):
