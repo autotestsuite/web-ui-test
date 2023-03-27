@@ -49,9 +49,12 @@ def browser_management():
 def _driver_from(settings: config.Settings) -> WebDriver:
     driver_options = _driver_options_from(settings)
     driver = (
-        set_up.local(
-            name=settings.browser_name,
-            options=driver_options,
+        # set_up.local(
+        #     name=settings.browser_name,
+        #     options=driver_options,
+        # )
+        getattr(webdriver, settings.browser_name.title())(
+            options=driver_options
         )
         if settings.debugging_mode
         else webdriver.Remote(
