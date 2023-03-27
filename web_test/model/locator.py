@@ -40,3 +40,8 @@ class LocatorConfig:
             by_, value = by.text(label_value)
             xpath = f'{self.locate_function(value)}//{self.tag}'
             return ss(by.xpath(xpath)).element_by(be.clickable)
+
+        def s_behind_label(self, label_value):
+            by_, value = by.text(label_value)
+            xpath = f'{self.locate_function(value)}//{self.tag}'
+            return ss(by.xpath(xpath))
