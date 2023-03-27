@@ -44,7 +44,10 @@ class FormData(FormDataConfig):
 class ABCForm(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def check_row_keyword_visible(self, row_keyword): pass
+    def row_keyword_should_be_visible(self, row_keyword): pass
+
+    @abc.abstractmethod
+    def row_keyword_should_not_be_visible(self, row_keyword): pass
 
     @abc.abstractmethod
     def click_row_keyword(self, row_keyword): pass

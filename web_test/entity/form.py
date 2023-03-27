@@ -1,6 +1,6 @@
 from loguru import logger
-from selene import by, be, query
-from selene.support.shared.jquery_style import s
+from selene import by, be, query, have
+from selene.support.shared.jquery_style import s, ss
 
 from web_test.model.form import ABCForm, FormData
 
@@ -16,9 +16,14 @@ class FormEntity(ABCForm):
         self.form_data_by_index = FormData(self.header_locator, self.row_locator_by_index)
         self.form_data_by_keyword = FormData(self.header_locator, self.row_locator_by_keyword)
 
-    def check_row_keyword_visible(self, row_keyword):
-        visible = s(by.text(row_keyword)).wait_until(be.visible)
-        logger.info(f'检查表单信息{row_keyword}是否可见：{visible}')
+    def row_keyword_should_be_visible(self, row_keyword):
+        logger.info(f'检查表单信息{row_keyword}是否可见')
+        ss(by.text(row_keyword)).should(have.size_greater_than_or_equal(1))
+        return self
+
+    def row_keyword_should_not_be_visible(self, row_keyword):
+        logger.info(f'检查表单信息{row_keyword}是否不可见')
+        ss(by.text(row_keyword)).should(have.no.size_greater_than_or_equal(1))
         return self
 
     def click_row_keyword(self, row_keyword):
