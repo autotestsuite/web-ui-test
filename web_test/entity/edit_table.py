@@ -2,7 +2,9 @@ from typing import Callable
 
 from loguru import logger
 from selene import be, by, query
+from selene.core.exceptions import TimeoutException
 from selene.support.shared.jquery_style import s, ss
+from selenium.common import ElementClickInterceptedException
 from selenium.webdriver.support.select import Select
 
 from web_test.assist.selenium import new_by
@@ -59,9 +61,24 @@ class EditTable(LocatorConfig):
 
     def click_button(self, button_text):
         logger.info(f'点击{button_text}按钮')
-        ss(
+        elements = ss(
             new_by.with_args(by.xpath('//button[translate(normalize-space(), " ", "")="{}"]'), button_text)
-        ).element_by(be.clickable).click()
+
+        )
+        clicked = False
+        try:
+            elements.element_by(be.clickable).click()
+            clicked = True
+        except TimeoutException:
+            for element in elements.locate():
+                try:
+                    element.click()
+                    clicked = True
+                    break
+                except ElementClickInterceptedException:
+                    continue
+        if not clicked:
+            raise ElementClickInterceptedException
         return self
 
     def get_text_after_label(self, label):
