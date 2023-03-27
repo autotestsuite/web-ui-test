@@ -4,7 +4,7 @@ from loguru import logger
 from selene import be, by, query
 from selene.core.exceptions import TimeoutException
 from selene.support.shared.jquery_style import s, ss
-from selenium.common import ElementClickInterceptedException
+from selenium.common import ElementClickInterceptedException, WebDriverException
 from selenium.webdriver.support.select import Select
 
 from web_test.assist.selenium import new_by
@@ -75,7 +75,7 @@ class EditTable(LocatorConfig):
                     element.click()
                     clicked = True
                     break
-                except ElementClickInterceptedException:
+                except WebDriverException:
                     continue
         if not clicked:
             raise ElementClickInterceptedException
