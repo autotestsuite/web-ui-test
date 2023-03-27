@@ -2,6 +2,7 @@ from typing import Callable
 
 from selene import be, by
 from selene.support.shared.jquery_style import s, ss
+from selenium.webdriver.support.select import Select
 
 from web_test.assist.selenium import new_by
 from web_test.model.locator import LocatorConfig
@@ -37,6 +38,10 @@ class EditTable(LocatorConfig):
 
     def click_button_after_label(self, label):
         self.button.behind_label(label).click()
+        return self
+
+    def select_dropdown_menu_after_label(self, label, option):
+        Select(self.select.behind_label(label).locate()).select_by_visible_text(option)
         return self
 
     def click_button(self, button_text):
