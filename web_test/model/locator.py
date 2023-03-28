@@ -10,14 +10,13 @@ class LocatorConfig:
     locate_function: Callable[[str], str] = None
 
     def behind_label(self, label_value):
-        by_, value = by.text(label_value)
-        xpath = f'{self.locate_function(value)}//{self.tag}'
-        return ss(by.xpath(xpath)).element_by(be.clickable)
+        return self.s_behind_label(label_value).element_by(be.clickable)
 
     def s_behind_label(self, label_value):
         by_, value = by.text(label_value)
-        xpath = f'{self.locate_function(value)}//{self.tag}'
-        return ss(by.xpath(xpath))
+        elements = ss(by.xpath(f'{self.locate_function(value)}//{self.tag}'))
+        elements.matching(be.visible)
+        return elements
 
     def __getattr__(self, tag: str):
         self.tag = tag
