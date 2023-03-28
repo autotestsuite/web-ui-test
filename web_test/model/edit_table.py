@@ -1,5 +1,3 @@
-from typing import Callable
-
 from loguru import logger
 from selene import be, query
 from selene.support.shared.jquery_style import s
@@ -9,14 +7,12 @@ from web_test.assist.selenium import new_by
 from web_test.model.locator import LocatorConfig
 
 
-class EditPageModel(LocatorConfig):
-    locate_rule: Callable[[str], str] = None
-
+class EditPageTable(LocatorConfig):
     select_option: tuple = None
 
     def input_text_after_label(self, label, text):
         logger.info(f'输入{label}的内容：{text}')
-        self.input_box.behind_label(label).click().clear().type(text)
+        self.input.behind_label(label).click().clear().type(text)
         return self
 
     def input_long_text_after_label(self, label, long_text):
@@ -26,7 +22,7 @@ class EditPageModel(LocatorConfig):
 
     def click_checkbox_after_label(self, label):
         logger.info(f'点击{label}多选框')
-        self.input_box.behind_label(label).click()
+        self.input.behind_label(label).click()
         return self
 
     def input_text_after_label_and_select_self(self, label, text):
@@ -43,7 +39,7 @@ class EditPageModel(LocatorConfig):
 
     def click_input_box_after_label_and_select_option(self, label, option):
         logger.info(f'点击{label}的内容并选择：{option}')
-        self.input_box.behind_label(label).click()
+        self.input.behind_label(label).click()
         s(new_by.with_args(self.select_option, option)).should(be.clickable).click()
         return self
 
@@ -58,6 +54,6 @@ class EditPageModel(LocatorConfig):
         return self
 
     def get_text_after_label(self, label):
-        text = self.text.behind_label(label).get(query.text)
+        text = self.span.behind_label(label).get(query.text)
         logger.info(f'获取{label}的内容：{text}')
         return text
