@@ -1,9 +1,8 @@
 from loguru import logger
-from selene import be, query
-from selene.support.shared.jquery_style import s
+from selene import be, query, have
+from selene.support.shared.jquery_style import ss
 from selenium.webdriver.support.select import Select
 
-from web_test.assist.selenium import new_by
 from web_test.model.locator import LocatorConfig
 
 
@@ -28,19 +27,19 @@ class EditPageTable(LocatorConfig):
     def input_text_after_label_and_select_self(self, label, text):
         logger.info(f'输入{label}的内容并选择：{text}')
         self.input_text_after_label(label, text)
-        s(new_by.with_args(self.select_option, text)).should(be.clickable).click()
+        ss(self.select_option).by(have.text(text)).element_by(be.clickable).click()
         return self
 
     def input_text_after_label_and_select_option(self, label, text, option):
         logger.info(f'输入{label}的内容{text}并选择：{option}')
         self.input_text_after_label(label, text)
-        s(new_by.with_args(self.select_option, option)).should(be.clickable).click()
+        ss(self.select_option).by(have.text(text)).element_by(be.clickable).click()
         return self
 
     def click_input_box_after_label_and_select_option(self, label, option):
         logger.info(f'点击{label}的内容并选择：{option}')
         self.input.behind_label(label).click()
-        s(new_by.with_args(self.select_option, option)).should(be.clickable).click()
+        ss(self.select_option).by(have.text(option)).element_by(be.clickable).click()
         return self
 
     def click_button_after_label(self, label):
