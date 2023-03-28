@@ -1,17 +1,15 @@
 from typing import Callable
 
 from loguru import logger
-from selene import be, by, query
-from selene.core.exceptions import TimeoutException
-from selene.support.shared.jquery_style import s, ss
-from selenium.common import ElementClickInterceptedException, WebDriverException
+from selene import be, query
+from selene.support.shared.jquery_style import s
 from selenium.webdriver.support.select import Select
 
 from web_test.assist.selenium import new_by
 from web_test.model.locator import LocatorConfig
 
 
-class EditTable(LocatorConfig):
+class EditPageModel(LocatorConfig):
     locate_rule: Callable[[str], str] = None
 
     select_option: tuple = None
@@ -57,28 +55,6 @@ class EditTable(LocatorConfig):
     def select_dropdown_menu_after_label(self, label, option):
         logger.info(f'选择{label}的下拉菜单：{option}')
         Select(self.select.behind_label(label).locate()).select_by_visible_text(option)
-        return self
-
-    def click_button(self, button_text):
-        logger.info(f'点击{button_text}按钮')
-        elements = ss(
-            new_by.with_args(by.xpath('//button[translate(normalize-space(), " ", "")="{}"]'), button_text)
-
-        )
-        clicked = False
-        try:
-            elements.element_by(be.clickable).click()
-            clicked = True
-        except TimeoutException:
-            for element in elements.locate():
-                try:
-                    element.click()
-                    clicked = True
-                    break
-                except WebDriverException:
-                    continue
-        if not clicked:
-            raise ElementClickInterceptedException
         return self
 
     def get_text_after_label(self, label):
