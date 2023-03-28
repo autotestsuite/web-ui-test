@@ -33,7 +33,7 @@ class EditPageTable(LocatorConfig):
     def input_text_after_label_and_select_option(self, label, text, option):
         logger.info(f'输入{label}的内容{text}并选择：{option}')
         self.input_text_after_label(label, text)
-        ss(self.select_option).by(have.text(text)).element_by(be.clickable).click()
+        ss(self.select_option).by(have.text(option)).element_by(be.clickable).click()
         return self
 
     def click_input_box_after_label_and_select_option(self, label, option):
