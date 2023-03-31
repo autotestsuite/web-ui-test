@@ -88,9 +88,9 @@ def _driver_options_from(settings: config.Settings) -> WebDriverOptions:
         options.set_capability('browserVersion', settings.browser_version)
         options.set_capability(
             'selenoid:options', {
-                "enableVNC": settings.remote_enableVNC,
-                "enableVideo": settings.remote_enableVideo,
-                "enableLog": settings.remote_enableLog,
+                'enableVNC': settings.remote_enableVNC,
+                'enableVideo': settings.remote_enableVideo,
+                'enableLog': settings.remote_enableLog,
             }
         )
 
