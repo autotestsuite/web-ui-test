@@ -122,7 +122,7 @@ browser_name=chrome
 browser_version=85.0
 
 ;基础url
-base_url=https://192.168.15.64
+base_url=https://www.google.com
 
 ;全局超时时间
 timeout=5.0
@@ -137,7 +137,7 @@ headless=False
 incognito=True
 
 ;远程Driver配置
-remote_url=http://192.168.15.92:4444/wd/hub
+remote_url=http://127.0.0.1:4444/wd/hub
 remote_enableVNC=True
 remote_enableVideo=False
 remote_enableLog=False
