@@ -1,7 +1,5 @@
 # web ui test
 
----
-
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -14,7 +12,6 @@
 
 ## Overview
 
----
 web ui 自动化测试项目，使用 selene + pytest + allure
 
 **注：selene 是一个基于 selenium 二次封装的开源库*
@@ -32,7 +29,6 @@ packages = [{include = "web-ui-test"}]
 
 ## Installation
 
----
 Given installed
 - python = "~3.10"
 - allure
@@ -57,8 +53,6 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-
----
 
 Quick Start
 
@@ -89,8 +83,6 @@ ss('#rso>div').should(have.size_greater_than(5)).first.should(have.text('Seleniu
 
 ## Run
 
----
-
 使用 pytest 提供的方式执行单条用例，支持使用命令行模式执行和 main.py 文件执行
 
 pytest.ini 文件中可配置 pytest 配置项：
@@ -105,14 +97,12 @@ markers =
 
 ## Report
 
----
 使用 allure 报告进行结果展示，可在 ./reports 中进行查看
 
 TBD
 
 ## Details
 
----
 在 ./config.local.env 或者 ./config.prod.env 中进行运行环境的配置
 ```ini
 ;浏览器名称
@@ -150,12 +140,10 @@ save_page_source_on_failure=False
 
 ## More Examples
 
----
 TBD
 
 ## Requirements
 
----
 项目依赖的三方库及版本信息：
 
 pypi style:
@@ -195,7 +183,6 @@ sphinx-rtd-theme = "^1.2.0"
 
 ## TODO
 
----
 - 编写通用 Assert 类，抛出TimeoutException异常
 - 增加 docs 目录，增加 pages 说明文档
 - 增加 @given / @when / @then 用例注解

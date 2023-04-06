@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     remote_enableVNC: bool = True
     remote_enableVideo: bool = False
     remote_enableLog: bool = True
+    remote_videoName: str = ''
 
     hold_browser_open: bool = False
     save_page_source_on_failure: bool = True

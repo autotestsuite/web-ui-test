@@ -3,6 +3,7 @@ from typing import List, Any, Dict
 
 def zip_dict(keys: List, values: Any) -> Dict:
     if not values:
+        values = [_ for _ in values]
         values += [''] * (len(keys) - len(values))
     pairs = zip(keys, values)
     non_empty_pairs = [(key, value) for key, value in pairs if key != '']

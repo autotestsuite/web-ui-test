@@ -14,6 +14,20 @@ class FormTable:
     def ths(self):
         return [th.get(query.text) for th in self.thead]
 
+    def get_row_attribute_by_index(self, index, attribute):
+        td = zip_dict(
+            self.ths,
+            self.tbody.element(index).all(by.xpath('*'))
+        ).get(attribute)
+        return td.get(query.text)
+
+    def get_row_attribute_by_text(self, text, attribute):
+        td = zip_dict(
+            self.ths,
+            self.tbody.by(have.text(text)).all(by.xpath('*'))
+        ).get(attribute)
+        return td.get(query.text)
+
     def should_have_size_at_least(self, amount) -> FormTable:
         self.tbody.should(have.size_greater_than_or_equal(amount))
         return self

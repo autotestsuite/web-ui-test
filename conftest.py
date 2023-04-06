@@ -11,10 +11,12 @@ from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
 
 import config
+from web_test import common
 from web_test.assist.allure import report
 from web_test.assist.python import monkey
+from web_test.assist.selene.shared.hook import attach_video_on_failure
 from web_test.assist.selenium.typing import WebDriverOptions
-from web_test.assist.webdriver_manager import supported, set_up
+from web_test.assist.webdriver_manager import supported
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -26,7 +28,7 @@ def add_reporting_to_selene_steps():
         return report.step(original_open)(self, relative_or_absolute_url)
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='function', autouse=True)
 def browser_management():
     browser.config.base_url = config.settings.base_url
     browser.config.timeout = config.settings.timeout
@@ -58,7 +60,7 @@ def _driver_from(settings: config.Settings) -> WebDriver:
         )
         if settings.debugging_mode
         else webdriver.Remote(
-            command_executor=settings.remote_url,
+            command_executor=f'{settings.remote_url}/wd/hub',
             options=driver_options
         )
     )
@@ -81,6 +83,7 @@ def _driver_options_from(settings: config.Settings) -> WebDriverOptions:
         pass
 
     if not settings.debugging_mode:
+        settings.remote_videoName = f'{common.time.get_current_time()}.mp4'
         options.set_capability('enableVNC', settings.remote_enableVNC)
         options.set_capability('enableVideo', settings.remote_enableVideo)
         options.set_capability('enableLog', settings.remote_enableLog)
@@ -90,7 +93,8 @@ def _driver_options_from(settings: config.Settings) -> WebDriverOptions:
             'selenoid:options', {
                 'enableVNC': settings.remote_enableVNC,
                 'enableVideo': settings.remote_enableVideo,
-                'enableLog': settings.remote_enableLog,
+                'videoName': settings.remote_videoName,
+                'enableLog': settings.remote_enableLog
             }
         )
 
@@ -168,3 +172,8 @@ def pytest_runtest_makereport(item: Item, call: CallInfo):
                 name='page source',
                 attachment_type=allure.attachment_type.HTML,
             )
+
+        video_source = config.settings.save_page_source_on_failure
+        if video_source:
+            video_src = f'{config.settings.remote_url}/video/{config.settings.remote_videoName}'
+            attach_video_on_failure(video_src)
