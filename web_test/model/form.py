@@ -28,6 +28,19 @@ class FormTable:
         ).get(attribute)
         return td.get(query.text)
 
+    def should_contains_child_dictionary(self, dictionary: dict):
+        tds = []
+        for row in self.tbody:
+            row_field = [_.get(query.text) for _ in row.all(by.xpath('*'))]
+            tds.append(zip_dict(self.ths, row_field))
+
+        def fn(entity):
+            if not [_ for _ in tds if all(_[__] == dictionary[__] for __ in dictionary)]:
+                raise AssertionError(f'table does not contain any nested dictionaries')
+
+        browser.wait.for_(fn)
+        return self
+
     def should_have_size_at_least(self, amount) -> FormTable:
         self.tbody.should(have.size_greater_than_or_equal(amount))
         return self
