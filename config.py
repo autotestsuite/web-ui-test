@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     incognito: bool = False
 
     remote_url: Optional[str] = ''
+    remote_sessionTimeout: str = ''
     remote_enableVNC: bool = True
     remote_enableVideo: bool = False
     remote_enableLog: bool = True

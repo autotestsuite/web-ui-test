@@ -156,6 +156,7 @@ pytest-ordering==0.6
 pytest-xdist==3.2.1
 selene==2.0.0b17
 pydantic==1.10.7
+PyYAML==6.0
 requests==2.28.2
 loguru==0.6.0
 ddddocr==1.4.7
@@ -179,11 +180,9 @@ pytest-xdist = "^3.2.1"
 pydantic = "^1.10.6"
 sphinx = "^6.1.3"
 sphinx-rtd-theme = "^1.2.0"
+pyyaml = "^6.0"
 ```
 
 ## TODO
 
-- 编写通用 Assert 类，抛出TimeoutException异常
-- 增加 docs 目录，增加 pages 说明文档
-- 增加 @given / @when / @then 用例注解
-- web ui 框架增加接口测试部分的功能
+TBD

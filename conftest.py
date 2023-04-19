@@ -1,4 +1,5 @@
 from typing import List
+from urllib.parse import urljoin
 
 import allure
 import allure_commons
@@ -91,6 +92,7 @@ def _driver_options_from(settings: config.Settings) -> WebDriverOptions:
         options.set_capability('browserVersion', settings.browser_version)
         options.set_capability(
             'selenoid:options', {
+                'sessionTimeout': settings.remote_sessionTimeout,
                 'enableVNC': settings.remote_enableVNC,
                 'enableVideo': settings.remote_enableVideo,
                 'videoName': settings.remote_videoName,
@@ -128,6 +130,16 @@ def _chrome_options_from(settings: config.Settings) -> WebDriverOptions:
     for argument in _arguments:
         options.add_argument(argument)
 
+    prefs = {
+        'profile.default_content_settings.popups': 0,
+        'download.default_directory': '/home/selenium/Downloads',
+        'download.prompt_for_download': False,
+        'download.directory_upgrade': True,
+        'safebrowsing.enabled': False,
+        'plugins.always_open_pdf_externally': True,
+        'plugins.plugins_disabled': ['Chrome PDF Viewer']
+    }
+    options.add_experimental_option('prefs', prefs)
     options.add_experimental_option('useAutomationExtension', False)
     options.add_experimental_option('excludeSwitches', ['enable-automation'])
 
@@ -175,5 +187,9 @@ def pytest_runtest_makereport(item: Item, call: CallInfo):
 
         video_source = config.settings.save_page_source_on_failure
         if video_source:
-            video_src = f'{config.settings.remote_url}/video/{config.settings.remote_videoName}'
-            attach_video_on_failure(video_src)
+            attach_video_on_failure(
+                urljoin(
+                    base=config.settings.remote_url,
+                    url=f'/video/{config.settings.remote_videoName}'
+                )
+            )
