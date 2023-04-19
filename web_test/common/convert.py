@@ -1,3 +1,4 @@
+import re
 from typing import List, Any, Dict
 
 
@@ -15,3 +16,34 @@ def zip_dict(keys: List, values: Any) -> Dict:
 def format_decimal_number_with_commas(number):
     formatted_number = f'{float(number):,}'
     return formatted_number
+
+
+def string_to_binary6(input_string):
+    result = ''
+    for char in input_string:
+        binary_string = format(ord(char), '08b')
+        binary6_string = binary_string[-6:]
+        result += binary6_string
+    return result
+
+
+def search_matching_dictionaries(dictionaries: List[Dict], dictionary: Dict) -> List:
+    return [
+        _
+        for _ in dictionaries
+        if all(
+            _[__] == dictionary[__]
+            for __ in dictionary
+        )
+    ]
+
+
+def search_matching_dictionaries_with_re(dictionaries: List[Dict], dictionary: Dict) -> List:
+    return [
+        _
+        for _ in dictionaries
+        if all(
+            re.search(dictionary[__], _[__])
+            for __ in dictionary
+        )
+    ]

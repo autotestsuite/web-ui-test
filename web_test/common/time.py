@@ -1,4 +1,6 @@
 import datetime
+import itertools
+import time
 
 DATETIME_FULL = '%Y-%m-%d %H:%M:%S'
 
@@ -41,3 +43,16 @@ def add_hours_and_days(datetime_str, hours, days):
     dt = datetime.datetime.strptime(datetime_str, DATETIME_FULL)
     new_dt = dt + datetime.timedelta(hours=hours, days=days)
     return new_dt.strftime(DATETIME_FULL)
+
+
+def wait(seconds):
+    iteration = 0
+    spinner = itertools.cycle(['-', '/', '|', '\\'])
+    while iteration < seconds:
+        progress = int(iteration / seconds * 20)
+        bar = '=' * progress + '-' * (20 - progress)
+        percent = (iteration / seconds) * 100
+        print('\rWaiting {}s {} [{}] {:.0f}%'.format(seconds, next(spinner), bar, percent), end='')
+        time.sleep(0.25)
+        iteration += 0.25
+    print('\rDone!')

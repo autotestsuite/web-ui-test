@@ -13,6 +13,29 @@ def recognize_img_text(img_bytes: bytes, recognize_area=None) -> str:
         return ocr.classification(recognize_part) or None
 
 
+def pic_compare(element: Element, pic_path: str):
+    js = 'var canvas = self;' \
+         'return canvas.toDataURL("image/png");'
+    img_data = element.execute_script(js)
+    img_base64 = img_data.split(',')[1]
+    img_bytes = base64.b64decode(img_base64)
+
+    def calculate_pixel(image):
+        image_his = image.histogram()
+        sum_pixel = 0
+        for i in range(0, len(image_his)):
+            sum_pixel += image_his[i]
+        return sum_pixel
+
+    with Image.open(BytesIO(img_bytes)) as img:
+        img_1_pixel_sum = calculate_pixel(img)
+
+    with Image.open(pic_path) as img:
+        img_2_pixel_sum = calculate_pixel(img)
+
+    return 1 - (abs(img_1_pixel_sum - img_2_pixel_sum) / max(img_1_pixel_sum, img_2_pixel_sum))
+
+
 def get_canvas_bytes(element: Element):
     js = 'var canvas = self;' \
          'var context = canvas.getContext("2d");' \

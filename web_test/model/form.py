@@ -45,6 +45,10 @@ class FormTable:
         self.tbody.should(have.size_greater_than_or_equal(amount))
         return self
 
+    def should_have_size_at_most(self, amount) -> FormTable:
+        self.tbody.should(have.size_less_than_or_equal(amount))
+        return self
+
     def should_have_text(self, text) -> FormTable:
         s(by.text(text)).should(be.visible)
         return self
