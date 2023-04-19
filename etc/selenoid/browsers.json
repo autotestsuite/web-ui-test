@@ -3,7 +3,7 @@
     "default": "85.0",
     "versions": {
       "85.0": {
-        "image": "selenoid/vnc:chrome_85.0",
+        "image": "selenoid/chrome:85.0",
         "port": "4444",
         "path": "/"
       }
